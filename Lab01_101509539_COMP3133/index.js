@@ -7,7 +7,6 @@ const inputFile = path.join(__dirname, "input_countries.csv");
 const canadaFile = path.join(__dirname, "canada.txt");
 const usaFile = path.join(__dirname, "usa.txt");
 
-// Delete output files if they already exist
 function safeDelete(filePath) {
   try {
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
@@ -19,7 +18,7 @@ function safeDelete(filePath) {
 safeDelete(canadaFile);
 safeDelete(usaFile);
 
-// Create write streams and write headers
+
 const canadaStream = fs.createWriteStream(canadaFile, { flags: "a" });
 const usaStream = fs.createWriteStream(usaFile, { flags: "a" });
 
@@ -33,7 +32,7 @@ let usaCount = 0;
 fs.createReadStream(inputFile)
   .pipe(csv())
   .on("data", (row) => {
-    // Normalize/defend against weird casing/spaces in CSV
+
     const country = String(row.country ?? "").trim().toLowerCase();
     const year = String(row.year ?? "").trim();
     const population = String(row.population ?? "").trim();
