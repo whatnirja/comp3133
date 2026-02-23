@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Client</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script> -->
+</head>
+<body>
+    <h1>Socket Programming</h1>
+    <script>
+        const socket = io()
+
+        socket.on('connect', ()=>{
+            console.log('Connected to server')
+            socket.send('Hi from Client')
+            const socketID = document.getElementById('socketID');
+            socketID.innerHTML = `<b>${socket.id}</b>`
+        })
+
+        socket.on('message', (data) => {
+                console.log(`Data : ${data}`)
+        })
+
+        function sendMessage() {
+            const txtmessage = document.getElementById('message');
+            const data = {
+                senderId: socket.id,
+                message: txtmessage.value,
+                datasent: Date()
+            }
+            socket.emit('chat_message', data)
+            const msg = `<p style='color:red'><b>${data.senderId}:</b> ${data.message}<p/>`
+            const container = document.getElementById('container')
+            container.innerHTML += msg
+        }
+
+        socket.on('chat_message', (data) => {
+            console.log(JSON.stringify(data))
+            const msg = `<p><b>${data.senderId}:</b> ${data.message}<p/>`
+            const container = document.getElementById('container')
+            container.innerHTML += msg
+        })
+    </script>
+    
+    <a href="/group-chat">Group Chat</a>
+    </br>
+    <h4 id="socketID"></h4>
+    <input type="text" id="message" name="message" placeholder="Enter your message" />
+    <button onclick="sendMessage()">Sent Message</button>
+    <h3>Chat History</h3>
+    <div id="container" name="container">
+    
+    </div>
+</body>
+</html>
