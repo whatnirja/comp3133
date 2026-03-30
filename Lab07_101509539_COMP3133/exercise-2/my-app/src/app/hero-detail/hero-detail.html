@@ -1,0 +1,6 @@
+<div *ngIf="hero as h">
+  <h2>{{ h.name | removeSpaces }}</h2>
+  <p>ID: {{ h.id }} (details component)</p>
+
+  <input [(ngModel)]="h.name" />
+</div>
