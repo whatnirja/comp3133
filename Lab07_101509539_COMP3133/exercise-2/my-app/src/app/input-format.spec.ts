@@ -1,9 +1,9 @@
 import { ElementRef } from '@angular/core';
-import { InputFormatDirective } from './input-format';
+import { InputFormat } from './input-format';
 
 describe('InputFormatDirective', () => {
   it('should create an instance', () => {
-    const directive = new InputFormatDirective(null as unknown as ElementRef);
+    const directive = new InputFormat(null as unknown as ElementRef);
     expect(directive).toBeTruthy();
   });
 });
